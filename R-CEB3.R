@@ -6,6 +6,12 @@ x <- data.frame(colonData$H64807, colonData$T62947)
 y <- colonData$Class
 inweight1 <- rep(0, dim(x)[2] + 1)
 
+head(x, 5)
+head(y, 5)
+inweight1
+
+# Perceptron
+
 perceptron <- function(x, y, inWeight, eta, niter) {
     weight <- inWeight
     errors <- rep(0, niter)
@@ -42,16 +48,18 @@ lines(err2, type = "o", col = "blue")
 title("Errors vs epoch - learning rate eta = 0.15")
 legend("bottomright", c("err1", "err2"), fill = c("red", "blue"))
 
+# SVM
+
 library(e1071)
 library(MASS)
 data(cats)
 catstrain <- cats
 catstest <- cats
 tune <- tune.svm(Sex ~ ., data = catstrain, gamma = 10^(-6:-1), cost = 10^(1:4))
-summary(tune)
+summary <- summary(tune)
+summary
 
 
-# change kernel to radial
 model <- svm(Sex ~ .,
     data = catstrain, method = "C-classification", kernel = "linear", probability = T,
     gamma = 0.01, cost = 100
@@ -59,6 +67,8 @@ model <- svm(Sex ~ .,
 prediction <- predict(model, catstest, probability = T)
 table(catstest$Sex, prediction)
 plot(model, cats)
+
+# change kernel to radial
 
 model <- svm(Sex ~ .,
     data = catstrain, method = "C-classification", kernel = "radial", probability = T,
@@ -124,7 +134,7 @@ table(colon_test$Class, prediction)
 plot(model, datasvm)
 
 
-# cluster
+# Hierarchical Clustering
 
 set.seed(101)
 # get samples from iris data
