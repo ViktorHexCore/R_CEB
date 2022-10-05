@@ -28,6 +28,7 @@ maxidx <- function(arr) {
     return(which(arr == max(arr)))
 }
 idx <- apply(mypredict, c(1), maxidx)
+idx
 prediction <- c("Iris-setosa", "Iris-versicolor", "Iris-virginica")[idx]
 table(prediction, testData$Species)
 
