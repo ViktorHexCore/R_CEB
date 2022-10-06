@@ -1,46 +1,40 @@
-dat <- read.table("DataForRpartOne/imputeExample.csv",header = TRUE,sep=",")
-head(dat)
 
-#Check the data for missing values.
-sapply(dat, function(x) sum(is.na(x)))
+# A
 
-#Add some missing in few variables.
-original <- dat
-head(original)
+autismData <- read.csv("DataForRpartOne/Autism-Adolescent-Data.csv")
+# leukemiaData <- read.csv("DataForRpartOne/leukemiaData.csv")
 
-data2 <- original
-set.seed(10)
-# set na with random
-data2[sample(1:nrow(data2), 20), "Cholesterol"] <- NA
-data2[sample(1:nrow(data2), 20), "Smoking"] <- NA
-data2[sample(1:nrow(data2), 20), "Education"] <- NA
-data2[sample(1:nrow(data2), 5), "Age"] <- NA
-data2[sample(1:nrow(data2), 5), "BMI"] <- NA
-sapply(data2, function(x) sum(is.na(x)))
+head(autismData, 5)
+
+summary(autismData)
+# stem(autismData$result)
+
+# colSums(is.na(autismData))
+sapply(autismData, function(x) sum(is.na(x)))
+# colSums(is.na(leukemiaData))
+# colnames(autismData)[colSums(is.na(autismData)) > 0]
 
 
-imputed <- data2
+# C
 
-# insert smoking mode val
-val <- unique(data2$Smoking[!is.na(data2$Smoking)])
-my_mode <- val[which.max(tabulate(match(data2$Smoking,val)))]
-imputed$Smoking[is.na(imputed$Smoking)] <- my_mode
+400 x1 + 200 x2 + 150 x3 + 500 x4 >= 500 kcal
 
-# insert education mode val
-val <- unique(data2$Education[!is.na(data2$Education)])
-my_mode <- val[which.max(tabulate(match(data2$Education,val)))]
-imputed$Education[is.na(imputed$Education)] <- my_mode
+3 x1 + 2 x2 + 0 x3 + 0 x4 >= 6 g protien
 
-sapply(imputed,function(x) sum(is.na(x)))
+2 x1 + 2 x2 + 4 x3 + 4 x4 >= 10 g carb
 
-# Smoking
-actual <- original$Smoking[is.na(data2$Smoking)]
-predicted <- original$Smoking[is.na(data2$Smoking)]
-table(actual)
-table(predicted)
+2 x1 + 4 x2 + 1 x3 + 5 x4 >= 8 g fat
 
-# Education
-actual <- original$Education[is.na(data2$Education)]
-predicted <- original$Education[is.na(data2$Education)]
-table(actual)
-table(predicted)
+get min prize bath
+500 x1 + 200 x2 + 300 x3 + 800 x4
+
+library(lpSolve)
+
+f.obj <- c(500, 200, 300, 800)
+
+f.con <- matrix(c(400, 200, 150, 500,
+3, 2, 0, 0,
+2, 2, 4, 4,
+2, 4, 1, 5), nrow = 4, byrow = TRUE)
+
+f.dir <-c(">=",">=",">=",">=")
