@@ -1,19 +1,56 @@
 
 # A
+A). From Autism-Adolescent-Data.csvand luekemiaData.csvdata, 
+complete the below tasks: (10 pts.) 
 
 autismData <- read.csv("DataForRpartOne/Autism-Adolescent-Data.csv")
 # leukemiaData <- read.csv("DataForRpartOne/leukemiaData.csv")
 
+
+# chose some data
 head(autismData, 5)
 
 summary(autismData)
 # stem(autismData$result)
 
+1. Data management (Preparing, Cleansing, Imputation, etc.)
+# find na value
 # colSums(is.na(autismData))
 sapply(autismData, function(x) sum(is.na(x)))
 # colSums(is.na(leukemiaData))
 # colnames(autismData)[colSums(is.na(autismData)) > 0]
 
+2. Build a classifier by using SVM, NN, and kNN
+
+library(e1071)
+library(MASS)
+
+# train test split
+set.seed(111)
+ind <- sample(2, nrow(allData), replace = TRUE, prob = c(0.7, 0.3))
+trainData <- allData[ind == 1, ]
+testData <- allData[ind == 2, ]
+nnet_iristrain <- trainData
+
+# tuning
+tune <- tune.svm(Class~., data=trainData, gamma=10^(-6:-1), cost=10^(1:4))
+summary(tune)
+
+model <- svm(Class~., data=trainData, method="C-classification", kernel="linear", probability=T, 
+gamma=0.1, cost=10)
+prediction <-predict(model, testData, probability=T)
+table(testData$Class, prediction)
+plot(model, allData)
+
+3. Model’s parameters tuning (if needs)
+4. Build a final model
+5. Model evaluation
+6. Results discussion (For example, Which method(model) should 
+you choose? Why? Please explain as much as possible)
+
+
+
+# B Describe all allalalalal
 
 # C
 
