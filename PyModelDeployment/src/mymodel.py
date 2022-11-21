@@ -1,7 +1,7 @@
-import pickle
 import pandas as pd
 # import numpy as np
 import medml as ml
+import pickle
 
 column_names = ["age", "sex", "cp", "trestbps", "chol", "fbs",
                 "restecg", "thalach", "exang", "oldpeak", "slope",
@@ -48,6 +48,11 @@ features.remove('Labels')
 heart = ml.ai(data=df, features=features, target='Labels', test_size=0.2)
 
 # Serialize your model
-print(heart.model.coef_)
+print("Coef save:",heart.model.coef_)
 
-pickle.dump(heart.model, open('Logreghearth.pkl', 'wb'))
+# save pokel by pickle
+pickle.dump(heart.model, open('./PyModelDeployment/model/Logreghearth.pkl', 'wb'))
+
+# try load model
+myheart = pickle.load(open('./PyModelDeployment/model/Logreghearth.pkl', 'rb'))
+print("Coef load:",myheart.coef_)
