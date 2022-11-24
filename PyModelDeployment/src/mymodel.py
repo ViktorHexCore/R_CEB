@@ -7,7 +7,9 @@ column_names = ["age", "sex", "cp", "trestbps", "chol", "fbs",
                 "restecg", "thalach", "exang", "oldpeak", "slope",
                 "ca", "thal", "num"]
 # use fullpath for url
-url = 'C:/Users/ADAWAS/Desktop/repos/R_CEB/PyModelDeployment/data/processed.cleveland.data'
+url = 'C:/Users/P/Desktop/repos/CEB_PyDeployModel/PyModelDeployment/data/processed.cleveland.data'
+# url = 'C:/Users/ADAWAS/Desktop/repos/R_CEB/PyModelDeployment/data/processed.cleveland.data'
+
 df = pd.read_csv(url, header=None, names=column_names)
 
 df = df[(df['thal'] != '?') & (df['ca'] != '?')].reset_index(drop=True)
@@ -43,16 +45,18 @@ data = df.loc[:, select_features]
 features = data.columns.tolist()
 features.remove('Labels')
 
-# print(df)
+print(df)
+print(data)
 
 heart = ml.ai(data=df, features=features, target='Labels', test_size=0.2)
 
 # Serialize your model
-print("Coef save:",heart.model.coef_)
+print("Coef save:", heart.model.coef_)
 
 # save pokel by pickle
-pickle.dump(heart.model, open('./PyModelDeployment/model/Logreghearth.pkl', 'wb'))
+pickle.dump(heart.model, open(
+    './PyModelDeployment/model/Logreghearth.pkl', 'wb'))
 
 # try load model
 myheart = pickle.load(open('./PyModelDeployment/model/Logreghearth.pkl', 'rb'))
-print("Coef load:",myheart.coef_)
+print("Coef load:", myheart.coef_)

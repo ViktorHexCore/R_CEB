@@ -49,7 +49,6 @@ plot(model, allData)
 you choose? Why? Please explain as much as possible)
 
 
-
 # B Describe all allalalalal
 
 # C
